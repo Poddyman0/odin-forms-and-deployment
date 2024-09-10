@@ -23,10 +23,6 @@ async function main() {
   await mongoose.connect(mongoDB);
 }
 
-main().catch((err) => console.log(err));
-async function main() {
-  await mongoose.connect(mongoDB);
-}
 
 
 // view engine setup
@@ -40,13 +36,39 @@ const limiter = RateLimit({
 });
 // Apply rate limiter to all requests
 app.use(limiter);
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  next();
+})
+/*
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+      "script-src": ["*"],
     },
   }),
 );
+*/
+/*
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["*"],   // Allow default source from anywhere
+    scriptSrc: ["*"],    // Allow script source from anywhere
+    styleSrc: ["*"],     // Allow style source from anywhere
+    imgSrc: ["*"],       // Allow image source from anywhere
+    connectSrc: ["*"],   // Allow connections to any source
+    fontSrc: ["*"],      // Allow font source from anywhere
+    objectSrc: ["*"],    // Allow object source from anywhere
+    mediaSrc: ["*"],     // Allow media source from anywhere
+    frameSrc: ["*"]      // Allow frame source from anywhere
+  }
+}));
+*/
+//app.use(cors());
+
 app.use(compression()); // Compress all routes
 
 app.use(logger('dev'));
@@ -76,5 +98,21 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+    // removed
+  /*
+    app.listen(3000, () =>
+      console.log(`App listening on port 3000!`),
+    );
+    */
+   // Use PORT provided in environment or default to 3000
+   const port = process.env.PORT || 3000;
+
+   // Listen on `port` and 0.0.0.0
+   app.listen(port, "0.0.0.0", function () {
+     // ...
+   });
+       
 
 module.exports = app;
