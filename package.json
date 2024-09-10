@@ -2,7 +2,7 @@
   "name": "express-locallibrary-tutorial",
   "version": "0.0.0",
   "engines": {
-    "node": ">=20.3.0"
+    "node": "10.24.1"
   },
   "private": true,
   "scripts": {
@@ -26,6 +26,7 @@
     "mongodb": "3.7",
     "mongoose": "^8.2.1",
     "morgan": "~1.9.1",
+    "node": "^10.24.1",
     "pug": "^3.0.2"
   },
   "devDependencies": {
